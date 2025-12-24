@@ -1,58 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600&display=swap');
 
-/* RESET */
+/* ================= RESET ================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* BODY BACKGROUND */
+/* ================= COMMON ================= */
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #f7fbff, #e9f0f7);
+    color: #111827;
+}
+
+/* ================= AUTH PAGES ================= */
 .login-bg {
     height: 100vh;
-    background: radial-gradient(circle at top, #f7fbff, #e9f0f7);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* CARD */
 .login-card {
     width: 520px;
     padding: 50px;
     background: #ffffff;
     border-radius: 28px;
     text-align: center;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
 }
 
-/* BRAND */
+/* Brand */
 .brand {
     font-family: 'Poppins', sans-serif;
     font-size: 26px;
     font-weight: 600;
     margin-bottom: 25px;
-    color: #111827;
 }
 
-/* HEADINGS */
+/* Headings */
 .login-card h2 {
     font-family: 'Poppins', sans-serif;
     font-size: 28px;
-    color: #111827;
     margin-bottom: 8px;
 }
 
 .subtitle {
-    font-family: 'Inter', sans-serif;
     font-size: 15px;
-    font-weight: 400;
     color: #6b7280;
-    letter-spacing: 0.2px;
     margin-bottom: 30px;
 }
 
-/* INPUTS (LOGIN + REGISTER) */
+/* Inputs */
 .login-card input[type="text"],
 .login-card input[type="email"],
 .login-card input[type="password"] {
@@ -62,7 +62,6 @@
     border: 1px solid #e5e7eb;
     margin-bottom: 18px;
     font-size: 14px;
-    font-family: 'Inter', sans-serif;
 }
 
 .login-card input:focus {
@@ -70,13 +69,12 @@
     border-color: #2563eb;
 }
 
-/* OPTIONS (REMEMBER + FORGOT) */
+/* Remember / Forgot */
 .login-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 12px 0 28px;
-    font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #374151;
 }
@@ -88,8 +86,8 @@
 }
 
 .login-options a {
-    font-weight: 500;
     color: #2563eb;
+    font-weight: 500;
     text-decoration: none;
 }
 
@@ -97,11 +95,10 @@
     text-decoration: underline;
 }
 
-/* BUTTON */
+/* Button */
 .login-card button {
     width: 100%;
     padding: 16px;
-    margin-top: 10px;
     margin-bottom: 18px;
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     border: none;
@@ -110,22 +107,18 @@
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: transform 0.25s ease;
 }
 
 .login-card button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-/* SIGNUP / LOGIN SWITCH TEXT */
+/* Switch text */
 .signup-text {
-    margin-top: 6px;
-    font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #6b7280;
-    text-align: center;
 }
 
 .signup-text a {
@@ -140,10 +133,212 @@
     text-decoration: underline;
 }
 
-/* RESPONSIVE (MOBILE) */
+/* ================= DASHBOARD ================= */
+
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #ffffff;
+    padding: 30px 20px;
+    box-shadow: 12px 0 30px rgba(0,0,0,0.05);
+}
+
+.sidebar-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 40px;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    font-size: 15px;
+    color: #374151;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: #eef3ff;
+    color: #2563eb;
+}
+
+/* Main Content */
+.dashboard-main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* Header */
+.dashboard-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.dashboard-header p {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+/* Stats Cards */
+.stats {
+    margin-top: 35px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 22px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.stat-card span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    margin-top: 45px;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+}
+
 @media (max-width: 600px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
     .login-card {
         width: 90%;
         padding: 35px;
     }
+}
+/* My Tasks Panel Styling */
+.right-panel {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.badge {
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+}
+
+.status-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* Status Dots */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-dot.todo { background-color: #f97316; }        /* Orange */
+.status-dot.in_progress { background-color: #2563eb; } /* Blue */
+.status-dot.done { background-color: #22c55e; }        /* Green */
+
+.status-text {
+    color: #64748b;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.task-date {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #94a3b8;
+    font-style: italic;
 }

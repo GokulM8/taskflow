@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #f7fbff, #e9f0f7);
+    color: #111827;
+}
+
+/* ================= WRAPPER ================= */
+.dashboard-wrapper {
+    padding: 30px 40px;
+}
+
+/* ================= TOP NAV ================= */
+.top-nav {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+.brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* ---------- NAV LINKS (FIXED & CLEAN) ---------- */
+.nav-links a {
+    position: relative;
+    margin: 0 14px;
+    padding-bottom: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+/* underline hidden by default */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #2563eb;
+    transition: width 0.3s ease;
+}
+
+/* hover underline */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* hover color ONLY for non-active */
+.nav-links a:not(.active):hover {
+    color: #2563eb;
+}
+
+/* active page → pill only */
+.nav-links a.active {
+    background: #2563eb;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 999px;
+}
+
+/* ensure active has NO underline */
+.nav-links a.active::after {
+    width: 0;
+}
+
+/* PROFILE */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    background: #c7d2fe;
+    border-radius: 50%;
+    transition: transform 0.3s ease, border 0.3s ease;
+}
+
+.profile:hover .avatar {
+    transform: scale(1.1);
+    border: 2px solid #2563eb;
+}
+
+/* ================= GRID ================= */
+.dashboard-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 260px 1fr 280px;
+    gap: 26px;
+}
+
+/* ================= LEFT PANEL ================= */
+.left-panel {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+.user-card {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.avatar-lg {
+    width: 70px;
+    height: 70px;
+    background: #bfdbfe;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+}
+
+.mini-stat {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+/* ================= CENTER PANEL ================= */
+.center-panel h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+}
+
+.center-panel .subtitle {
+    margin-top: 6px;
+    color: #6b7280;
+}
+
+/* STATS */
+.stats-row {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card span {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.stat-card h2 {
+    margin-top: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.stat-card.highlight {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+}
+
+.stat-card.highlight span {
+    color: #e0e7ff;
+}
+
+/* ================= LARGE CARD ================= */
+.large-card {
+    margin-top: 26px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.large-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+}
+
+/* ================= RIGHT PANEL ================= */
+.right-panel {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+/* -------- TASK CARD (SMOOTH ANIMATION) -------- */
+.task-card {
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.25s ease;
+
+    will-change: transform, box-shadow;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+    border-color: #dbeafe;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

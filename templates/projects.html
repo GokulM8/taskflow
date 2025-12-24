@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects | TaskFlow</title>
+
+    <!-- Shared styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <!-- Projects specific styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <!-- TOP NAV -->
+    <header class="top-nav">
+        <div class="brand">TaskFlow</div>
+
+        <nav class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('projects') }}" class="active">Projects</a>
+            <a href="#">Tasks</a>
+            <a href="#">Calendar</a>
+            <a href="#">Reports</a>
+        </nav>
+
+        <div class="profile">
+            <div class="avatar"></div>
+            <span>{{ name }}</span>
+        </div>
+    </header>
+
+    <!-- PROJECTS HEADER + CREATE FORM -->
+    <section class="projects-header">
+        <h1>Projects</h1>
+        <p class="subtitle">Manage and track all your projects</p>
+
+        <form method="POST" action="{{ url_for('create_project') }}" class="create-project-form">
+            <input
+                type="text"
+                name="title"
+                placeholder="Project title"
+                required
+            >
+            <textarea
+                name="description"
+                placeholder="Project description (optional)">
+            </textarea>
+
+            <button type="submit" class="primary-btn">
+                Create Project
+            </button>
+        </form>
+    </section>
+
+    <!-- PROJECTS GRID -->
+    <section class="projects-grid">
+
+        {% if projects %}
+            {% for project in projects %}
+                <div class="project-card">
+
+                    <div class="project-header">
+                        <div class="project-text">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <p class="project-desc">
+                                {{ project.description if project.description else "No description provided." }}
+                            </p>
+                        </div>
+
+                        <span class="project-status {{ project.status }}">
+                            {{ project.status.replace('_',' ').title() }}
+                        </span>
+                    </div>
+
+                    <div class="project-meta">
+                        <span>Tasks: {{ project.task_count }}</span>
+                        <span>Created: {{ project.created_at.split(' ')[0] }}</span>
+                    </div>
+
+                    <div class="project-actions">
+                        <a href="{{ url_for('project_details', project_id=project.id) }}" class="link-btn">
+                            View
+                        </a>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">No projects created yet.</p>
+        {% endif %}
+
+    </section>
+
+</div>
+
+</body>
+</html>

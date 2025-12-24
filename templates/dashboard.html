@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | TaskFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+
+    <header class="top-nav">
+        <div class="brand">TaskFlow</div>
+
+        <nav class="nav-links">
+            <a href="{{ url_for('dashboard') }}" class="active">Dashboard</a>
+            <a href="{{ url_for('projects') }}">Projects</a>
+            <a href="#">Tasks</a>
+            <a href="#">Calendar</a>
+            <a href="#">Reports</a>
+        </nav>
+        
+
+        <div class="profile">
+            <div class="avatar"></div>
+            <span>{{ name }}</span>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+
+        <aside class="left-panel">
+            <h3>User Overview</h3>
+
+            <div class="user-card">
+                <div class="avatar-lg"></div>
+                <h4>{{ name }}</h4>
+                <p>Project Manager</p>
+            </div>
+
+            <div class="mini-stat">
+                <span>Active Projects</span>
+                <strong>{{ total_projects }}</strong>
+            </div>
+
+            <div class="mini-stat">
+                <span>Tasks In Progress</span>
+                <strong>{{ in_progress }}</strong>
+            </div>
+        </aside>
+
+        <main class="center-panel">
+            <h1>Welcome back, {{ name }}</h1>
+            <p class="subtitle">Here’s a snapshot of your project activity</p>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span>Total Tasks</span>
+                    <h2>{{ total_tasks }}</h2>
+                </div>
+
+                <div class="stat-card">
+                    <span>Completed</span>
+                    <h2>{{ completed }}</h2>
+                </div>
+
+                <div class="stat-card highlight">
+                    <span>In Progress</span>
+                    <h2>{{ in_progress }}</h2>
+                </div>
+            </div>
+
+            <div class="large-card">
+                <h3>Weekly Activity</h3>
+                <div class="chart-container" style="position: relative; height:30vh; width:100%">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <aside class="right-panel">
+            <div class="panel-header">
+                <h3>My Tasks</h3>
+                <span class="badge">{{ tasks|length }} Recent</span>
+            </div>
+
+            <div class="task-list">
+                {% for task in tasks %}
+                <div class="task-card">
+                    <div class="task-info">
+                        <strong>{{ task.title }}</strong>
+                        <div class="status-group">
+                            <span class="status-dot {{ task.status }}"></span>
+                            <small class="status-text">
+                                {% if task.status == 'todo' %} To-Do
+                                {% elif task.status == 'in_progress' %} In Progress
+                                {% elif task.status == 'done' %} Done
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="task-date">
+                        {{ task.created_at.split(' ')[0] if task.created_at else 'N/A' }}
+                    </div>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>No tasks yet. Start by creating a project!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </aside>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    /**
+     * Parsing Python data to JS
+     * We wrap in JSON.parse and quotes to prevent code editor syntax errors 
+     * and use |safe to prevent Jinja from escaping brackets.
+     */
+    const weeklyData = JSON.parse('{{ weekly_data | tojson | safe }}');
+
+    const ctx = document.getElementById('weeklyChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            datasets: [{
+                label: 'Tasks Completed',
+                data: weeklyData,
+                borderColor: '#2563eb',
+                backgroundColor: 'rgba(37, 99, 235, 0.15)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#2563eb'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { 
+                        stepSize: 1,
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: '#f1f5f9'
+                    }
+                },
+                x: {
+                    ticks: { color: '#64748b' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
