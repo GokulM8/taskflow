@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | TaskFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="login-bg">
+    <div class="login-card">
+
+        <h1 class="brand">TaskFlow</h1>
+
+        <h2>Create Account</h2>
+        <p class="subtitle">Start managing your projects today</p>
+
+        <form method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <p class="signup-text">
+            Already have an account?
+            <a href="/login">Log In</a>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>
