@@ -10,64 +10,110 @@
 
 <div class="tasks-page">
 
-  <!-- ================= TOP BAR ================= -->
+  <!-- HEADER -->
   <div class="tasks-header">
-    <h1>YOUR TASKS</h1>
-
-    <div class="header-actions">
-      <div class="view-toggle">
-        <button class="active">List</button>
-        <button>Board</button>
-      </div>
-
-      <input type="text" placeholder="Quick-add task..." class="quick-add">
-      <button class="add-btn">+</button>
-    </div>
+    <h1>Your Tasks</h1>
   </div>
+  <form class="task-filters" method="GET">
 
-  <!-- ================= CONTENT ================= -->
-  <div class="tasks-content">
+    <input type="text"
+           name="search"
+           placeholder="Search tasks..."
+           value="{{ search_query or '' }}">
+  
+    <select name="status">
+      <option value="">All Status</option>
+      <option value="todo" {% if status_filter=='todo' %}selected{% endif %}>To Do</option>
+      <option value="in_progress" {% if status_filter=='in_progress' %}selected{% endif %}>In Progress</option>
+      <option value="completed" {% if status_filter=='completed' %}selected{% endif %}>Completed</option>
+    </select>
+  
+    <select name="priority">
+      <option value="">All Priority</option>
+      <option value="low" {% if priority_filter=='low' %}selected{% endif %}>Low</option>
+      <option value="medium" {% if priority_filter=='medium' %}selected{% endif %}>Medium</option>
+      <option value="high" {% if priority_filter=='high' %}selected{% endif %}>High</option>
+    </select>
+  
+    <button type="submit" class="filter-btn">
+      Apply
+    </button>
+  
+  </form>
+  
+  <div class="tasks-layout">
 
     <!-- LEFT: TASK LIST -->
     <div class="task-list">
       <h3>Inbox</h3>
 
-      <div class="task-item active">
-        <input type="checkbox">
-        <span class="task-title">Review Q3 Marketing Deck</span>
-        <span class="badge high">High</span>
-        <span class="badge low">Low</span>
-        <span class="date">Oct 26</span>
-      </div>
+      {% if tasks %}
+        {% for task in tasks %}
+        <div class="task-item
+            {% if task.due_date and task.due_date < today_date and task.status != 'completed' %}
+              overdue
+            {% endif %}
+            {% if loop.first %}active{% endif %}"
+          data-title="{{ task.title }}"
+          data-description="{{ task.description or 'No description provided.' }}"
+          data-priority="{{ task.priority }}"
+          data-status="{{ task.status }}"
+          data-date="{{ task.due_date or 'No due date' }}"
+        >
 
-      <div class="task-item">
-        <input type="checkbox">
-        <span class="task-title">Finalize Project Proposal</span>
-        <span class="badge medium">Medium</span>
-        <span class="badge inprogress">In Progress</span>
-        <span class="date">Oct 28</span>
-      </div>
+          <div class="task-left">
+            <span class="task-title">{{ task.title }}</span>
 
+            <div class="task-badges">
+              <span class="badge priority {{ task.priority }}">
+                {{ task.priority.title() }}
+              </span>
+
+              <span class="badge status {{ task.status }}">
+                {{ task.status.replace('_',' ').title() }}
+              </span>
+            </div>
+          </div>
+
+          <span class="task-date">
+            {{ task.due_date or '—' }}
+          </span>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="empty-text">No tasks found.</p>
+      {% endif %}
     </div>
 
     <!-- RIGHT: TASK DETAILS -->
     <div class="task-details">
       <h3>Task Details</h3>
 
-      <h4>Finalize Project Proposal</h4>
-      <p class="description">
-        Prepare and finalize the project proposal document for client review.
+      {% if tasks %}
+      <h4 id="detail-title">{{ tasks[0].title }}</h4>
+      <p id="detail-description">
+        {{ tasks[0].description or "No description provided." }}
       </p>
 
-      <div class="section">
-        <h5>Attachments</h5>
-        <p>proposal_draft.pdf</p>
+      <div class="detail-row">
+        <span>Priority</span>
+        <strong id="detail-priority">{{ tasks[0].priority.title() }}</strong>
       </div>
 
-      <div class="section">
-        <h5>Comments</h5>
-        <input type="text" placeholder="Write a comment...">
+      <div class="detail-row">
+        <span>Status</span>
+        <strong id="detail-status">
+          {{ tasks[0].status.replace('_',' ').title() }}
+        </strong>
       </div>
+
+      <div class="detail-row">
+        <span>Due Date</span>
+        <strong id="detail-date">{{ tasks[0].due_date or "No due date" }}</strong>
+      </div>
+      {% else %}
+        <p>Select a task to view details.</p>
+      {% endif %}
     </div>
 
   </div>
@@ -77,22 +123,27 @@
 
 {% block scripts %}
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const tasks = document.querySelectorAll(".task-item");
-    const title = document.querySelector(".task-details h4");
-    const description = document.querySelector(".description");
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".task-item");
 
-    tasks.forEach(task => {
-      task.addEventListener("click", () => {
-        tasks.forEach(t => t.classList.remove("active"));
-        task.classList.add("active");
+  const title = document.getElementById("detail-title");
+  const desc = document.getElementById("detail-description");
+  const priority = document.getElementById("detail-priority");
+  const status = document.getElementById("detail-status");
+  const date = document.getElementById("detail-date");
 
-        title.textContent = task.querySelector(".task-title").textContent;
-        description.textContent =
-          "This is the detailed description for " +
-          task.querySelector(".task-title").textContent;
-      });
+  items.forEach(item => {
+    item.addEventListener("click", () => {
+      items.forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+
+      title.textContent = item.dataset.title;
+      desc.textContent = item.dataset.description;
+      priority.textContent = item.dataset.priority.toUpperCase();
+      status.textContent = item.dataset.status.replace("_"," ").toUpperCase();
+      date.textContent = item.dataset.date;
     });
   });
+});
 </script>
 {% endblock %}

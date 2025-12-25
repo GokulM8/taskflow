@@ -13,7 +13,6 @@
     padding: 28px 32px;
     border-radius: 26px;
     box-shadow: 0 25px 45px rgba(0,0,0,0.06);
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -60,7 +59,7 @@
     color: #c2410c;
 }
 
-.project-dashboard-page .project-status.done {
+.project-dashboard-page .project-status.completed {
     background: #ecfdf5;
     color: #047857;
 }
@@ -102,17 +101,6 @@
     transition: transform 0.3s ease;
 }
 
-.project-dashboard-page .stat-card span {
-    font-size: 14px;
-    color: #6b7280;
-}
-
-.project-dashboard-page .stat-card h2 {
-    margin-top: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 26px;
-}
-
 .project-dashboard-page .stat-card:hover {
     transform: translateY(-4px);
 }
@@ -120,10 +108,6 @@
 .project-dashboard-page .stat-card.highlight {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
-}
-
-.project-dashboard-page .stat-card.highlight span {
-    color: #e0e7ff;
 }
 
 /* ================= PROJECT TASKS CARD ================= */
@@ -135,36 +119,25 @@
     box-shadow: 0 25px 45px rgba(0,0,0,0.06);
 }
 
-/* TASK HEADER */
+/* ================= TASKS HEADER FIX ================= */
+
 .project-dashboard-page .tasks-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 18px;
 }
 
-.project-dashboard-page .tasks-header h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-}
-
-/* ================= SECONDARY BUTTON ================= */
-
-.project-dashboard-page .secondary-btn {
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: 1px solid #2563eb;
-    background: transparent;
-    color: #2563eb;
+.project-dashboard-page .view-all-link {
     font-size: 13px;
     font-weight: 600;
-    cursor: pointer;
-    transition: background 0.25s ease, color 0.25s ease;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
-.project-dashboard-page .secondary-btn:hover {
-    background: #2563eb;
-    color: #ffffff;
+.project-dashboard-page .view-all-link:hover {
+    text-decoration: underline;
 }
 
 /* ================= TASK LIST ================= */
@@ -172,24 +145,36 @@
 .project-dashboard-page .project-task-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
+/* ===== SMOOTH TASK ROW ===== */
+
 .project-dashboard-page .task-row {
-    padding: 14px 16px;
-    border-radius: 14px;
-    border: 1px solid #f1f5f9;
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid #eef2f7;
+    background: #ffffff;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    transition: background 0.25s ease, transform 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .project-dashboard-page .task-row:hover {
     background: #f8fafc;
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+/* ===== TASK MAIN ===== */
+
+.project-dashboard-page .task-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .project-dashboard-page .task-title {
@@ -197,7 +182,8 @@
     font-weight: 500;
 }
 
-/* TASK STATUS */
+/* ================= TASK STATUS ================= */
+
 .project-dashboard-page .task-status {
     padding: 6px 12px;
     border-radius: 999px;
@@ -215,92 +201,119 @@
     color: #c2410c;
 }
 
-.project-dashboard-page .task-status.done {
+.project-dashboard-page .task-status.completed {
     background: #ecfdf5;
     color: #047857;
 }
 
-/* ================= EMPTY STATE ================= */
+/* ================= PRIORITY BADGES ================= */
 
-.project-dashboard-page .empty-text {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #6b7280;
+.project-dashboard-page .badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
 }
 
-/* ================= ADD TASK MODAL (FIXED & ISOLATED) ================= */
+.project-dashboard-page .badge.low { background: #10b981; }
+.project-dashboard-page .badge.medium { background: #f59e0b; }
+.project-dashboard-page .badge.high { background: #ef4444; }
 
-.project-dashboard-page .tf-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.55);
+/* ================= TASK ACTIONS ================= */
 
-    display: none;
+.project-dashboard-page .task-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-dashboard-page .task-actions select {
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.project-dashboard-page .delete-btn {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    width: 30px;
+    height: 30px;
+
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    z-index: 9999;
+    color: #dc2626;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
-.project-dashboard-page .tf-modal.active {
+.project-dashboard-page .delete-btn:hover {
+    background: #fee2e2;
+}
+
+/* ================= OVERDUE ================= */
+
+.project-dashboard-page .task-row.overdue {
+    border-color: #fecaca;
+    background: #fff1f2;
+}
+
+.project-dashboard-page .task-row.overdue .task-title,
+.project-dashboard-page .task-row.overdue .task-date {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* ================= INLINE ADD TASK ================= */
+
+.project-dashboard-page .add-task-inline {
     display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
 }
 
-/* MODAL BOX */
-.project-dashboard-page .tf-modal-box {
+.project-dashboard-page .add-task-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 1.5px solid #e5e7eb;
     background: #ffffff;
-    padding: 28px;
-    border-radius: 26px;
-    width: 380px;
-
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.12),
-        0 8px 16px rgba(0,0,0,0.08);
-
-    animation: modalPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* MODAL TITLE */
-.project-dashboard-page .tf-modal-box h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    margin-bottom: 18px;
-}
-
-/* MODAL INPUT */
-.project-dashboard-page .tf-modal-box input {
+.project-dashboard-page .add-task-input input {
+    border: none;
+    outline: none;
     width: 100%;
-    padding: 14px 16px;
-    border-radius: 16px;
-    border: 1px solid #e5e7eb;
     font-size: 14px;
 }
 
-.project-dashboard-page .tf-modal-box input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+.project-dashboard-page .priority-select,
+.project-dashboard-page .due-date-input {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    background: #ffffff;
 }
 
-/* MODAL ACTIONS */
-.project-dashboard-page .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 22px;
-}
-
-/* ================= ANIMATION ================= */
-
-@keyframes modalPop {
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.project-dashboard-page .add-task-btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -315,107 +328,41 @@
         grid-template-columns: 1fr;
     }
 }
-/* ================= INLINE ADD TASK ================= */
 
-.project-dashboard-page .add-task-inline {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-}
+/* ================= PROJECT PROGRESS ================= */
 
-.project-dashboard-page .add-task-inline input {
-    flex: 1;
-    padding: 14px 18px;
-    border-radius: 999px;
-    border: 1px solid #e5e7eb;
-    font-size: 14px;
-
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.project-dashboard-page .add-task-inline input::placeholder {
-    color: #9ca3af;
-}
-
-.project-dashboard-page .add-task-inline input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
-}
-
-.project-dashboard-page .add-task-inline .primary-btn {
-    padding: 10px 20px;
-    font-size: 13px;
-}
-/* ================= INLINE ADD TASK (FINAL) ================= */
-
-.project-dashboard-page .add-task-inline {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-}
-
-.project-dashboard-page .add-task-input {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 14px 20px;
-    border-radius: 999px;
-    border: 1.5px solid #e5e7eb;
+.project-dashboard-page .project-progress-card {
     background: #ffffff;
-
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
 }
 
-.project-dashboard-page .add-task-input:hover {
-    border-color: #c7d2fe;
-}
-
-.project-dashboard-page .add-task-input:focus-within {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-}
-
-.project-dashboard-page .add-icon {
-    font-size: 18px;
-    font-weight: 600;
-    color: #9ca3af;
-}
-
-.project-dashboard-page .add-task-input input {
-    border: none;
-    outline: none;
-    flex: 1;
+.project-dashboard-page .progress-header {
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
-    background: transparent;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-.project-dashboard-page .add-task-input input::placeholder {
-    color: #9ca3af;
-}
-
-/* ADD BUTTON */
-.project-dashboard-page .add-task-btn {
-    padding: 12px 22px;
+.project-dashboard-page .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e5e7eb;
     border-radius: 999px;
-    border: none;
-    cursor: pointer;
-
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: #ffffff;
-
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
 }
 
-.project-dashboard-page .add-task-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+.project-dashboard-page .progress-fill {
+    height: 100%;
+    width: var(--progress, 0%);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-radius: 999px;
+    transition: width 0.6s ease, background 0.4s ease;
+}
+
+/* 🎉 GREEN WHEN 100% */
+.project-dashboard-page .project-progress-card.completed .progress-fill {
+    background: linear-gradient(135deg, #10b981, #059669);
 }

@@ -9,6 +9,7 @@ def init_db():
     conn = get_db()
     cursor = conn.cursor()
 
+    # USERS TABLE
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,6 +20,7 @@ def init_db():
     )
     """)
 
+    # PROJECTS TABLE
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,12 +32,16 @@ def init_db():
     )
     """)
 
+    # TASKS TABLE (STEP 1 FINAL)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         project_id INTEGER NOT NULL,
         title TEXT NOT NULL,
-        status TEXT CHECK(status IN ('todo', 'in_progress', 'done')) DEFAULT 'todo',
+        description TEXT,
+        status TEXT CHECK(status IN ('todo', 'in_progress', 'completed')) DEFAULT 'todo',
+        priority TEXT CHECK(priority IN ('low', 'medium', 'high')) DEFAULT 'medium',
+        due_date TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (project_id) REFERENCES projects(id)
     )
@@ -43,3 +49,7 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+if __name__ == "__main__":
+    init_db()
+    print("Database initialized successfully.")

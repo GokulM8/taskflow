@@ -8,6 +8,7 @@
 
 {% block content %}
 
+
 <section class="project-dashboard-page">
 
   <!-- ================= PROJECT HEADER ================= -->
@@ -54,44 +55,108 @@
       <h2>{{ stats.in_progress }}</h2>
     </div>
   </div>
+  
+  <!-- ================= PROJECT PROGRESS ================= -->
+<div class="project-progress-card
+     {% if stats.progress == 100 %}completed{% endif %}"
+     style="--progress: {{ stats.progress if stats and 'progress' in stats else 0 }}%;">
+
+  <div class="progress-header">
+    <span>Project Progress</span>
+    <span>{{ stats.progress if stats and 'progress' in stats else 0 }}%</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+</div>
+
 
   <!-- ================= PROJECT TASKS ================= -->
   <div class="project-tasks-card">
 
     <div class="tasks-header">
       <h3>Project Tasks</h3>
+      <a href="{{ url_for('tasks') }}" class="link-btn">View All Tasks</a>
     </div>
 
-    <!-- ✅ SINGLE, CLEAN ADD TASK -->
+    <!-- ================= ADD TASK ================= -->
     <form class="add-task-inline"
           method="POST"
           action="{{ url_for('create_task', project_id=project.id) }}">
 
       <div class="add-task-input">
         <span class="add-icon">+</span>
-        <input
-          type="text"
-          name="title"
-          placeholder="Add a new task"
-          required
-        >
+        <input type="text"
+               name="title"
+               placeholder="Add a new task"
+               required>
       </div>
+
+      <select name="priority" class="priority-select">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <input type="date" name="due_date" class="due-date-input">
 
       <button type="submit" class="add-task-btn">
         Add
       </button>
     </form>
 
+    <!-- ================= TASK LIST ================= -->
     {% if tasks %}
       <div class="project-task-list">
+
         {% for task in tasks %}
-          <div class="task-row">
+        <div class="task-row
+          {% if task.due_date and task.due_date < today_date and task.status != 'completed' %}
+            overdue
+          {% endif %}">
+
+          <div class="task-main">
             <span class="task-title">{{ task.title }}</span>
-            <span class="task-status {{ task.status }}">
-              {{ task.status.replace('_',' ').title() }}
-            </span>
+
+            {% if task.priority %}
+              <span class="badge {{ task.priority }}">
+                {{ task.priority.title() }}
+              </span>
+            {% endif %}
+
+            {% if task.due_date %}
+              <span class="task-date">{{ task.due_date }}</span>
+            {% endif %}
+
+            {% if task.due_date and task.due_date < today_date and task.status != 'completed' %}
+              <span class="badge overdue">Overdue</span>
+            {% endif %}
           </div>
+
+          <div class="task-actions">
+
+            <!-- UPDATE STATUS -->
+            <form method="POST"
+                  action="{{ url_for('update_task', task_id=task.id) }}">
+              <select name="status" onchange="this.form.submit()">
+                <option value="todo" {% if task.status=='todo' %}selected{% endif %}>To Do</option>
+                <option value="in_progress" {% if task.status=='in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="completed" {% if task.status=='completed' %}selected{% endif %}>Completed</option>
+              </select>
+            </form>
+
+            <!-- DELETE TASK -->
+            <form method="POST"
+                  action="{{ url_for('delete_task', task_id=task.id) }}"
+                  onsubmit="return confirm('Delete this task?');">
+              <button class="delete-btn">✕</button>
+            </form>
+
+          </div>
+        </div>
         {% endfor %}
+
       </div>
     {% else %}
       <p class="empty-text">No tasks yet for this project.</p>
