@@ -1,0 +1,421 @@
+/* ================= PROJECT DASHBOARD PAGE ================= */
+
+.project-dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ================= PROJECT HEADER CARD ================= */
+
+.project-dashboard-page .project-header-card {
+    background: #ffffff;
+    padding: 28px 32px;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.project-dashboard-page .project-header-left h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.project-dashboard-page .project-desc {
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 14px;
+    max-width: 640px;
+}
+
+.project-dashboard-page .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* ================= PROJECT STATUS ================= */
+
+.project-dashboard-page .project-status {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.project-dashboard-page .project-status.todo {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.project-dashboard-page .project-status.in_progress {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.project-dashboard-page .project-status.done {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+/* ================= PRIMARY BUTTON ================= */
+
+.project-dashboard-page .primary-btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-dashboard-page .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37,99,235,0.25);
+}
+
+/* ================= STATS GRID ================= */
+
+.project-dashboard-page .project-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.project-dashboard-page .stat-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease;
+}
+
+.project-dashboard-page .stat-card span {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.project-dashboard-page .stat-card h2 {
+    margin-top: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+}
+
+.project-dashboard-page .stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.project-dashboard-page .stat-card.highlight {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.project-dashboard-page .stat-card.highlight span {
+    color: #e0e7ff;
+}
+
+/* ================= PROJECT TASKS CARD ================= */
+
+.project-dashboard-page .project-tasks-card {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+}
+
+/* TASK HEADER */
+.project-dashboard-page .tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.project-dashboard-page .tasks-header h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+/* ================= SECONDARY BUTTON ================= */
+
+.project-dashboard-page .secondary-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #2563eb;
+    background: transparent;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.project-dashboard-page .secondary-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* ================= TASK LIST ================= */
+
+.project-dashboard-page .project-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.project-dashboard-page .task-row {
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid #f1f5f9;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.project-dashboard-page .task-row:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+}
+
+.project-dashboard-page .task-title {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* TASK STATUS */
+.project-dashboard-page .task-status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.project-dashboard-page .task-status.todo {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.project-dashboard-page .task-status.in_progress {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.project-dashboard-page .task-status.done {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+/* ================= EMPTY STATE ================= */
+
+.project-dashboard-page .empty-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* ================= ADD TASK MODAL (FIXED & ISOLATED) ================= */
+
+.project-dashboard-page .tf-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.project-dashboard-page .tf-modal.active {
+    display: flex;
+}
+
+/* MODAL BOX */
+.project-dashboard-page .tf-modal-box {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 26px;
+    width: 380px;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.12),
+        0 8px 16px rgba(0,0,0,0.08);
+
+    animation: modalPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MODAL TITLE */
+.project-dashboard-page .tf-modal-box h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+/* MODAL INPUT */
+.project-dashboard-page .tf-modal-box input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.project-dashboard-page .tf-modal-box input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+
+/* MODAL ACTIONS */
+.project-dashboard-page .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+    .project-dashboard-page .project-header-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .project-dashboard-page .project-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ================= INLINE ADD TASK ================= */
+
+.project-dashboard-page .add-task-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.project-dashboard-page .add-task-inline input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-dashboard-page .add-task-inline input::placeholder {
+    color: #9ca3af;
+}
+
+.project-dashboard-page .add-task-inline input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+
+.project-dashboard-page .add-task-inline .primary-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+}
+/* ================= INLINE ADD TASK (FINAL) ================= */
+
+.project-dashboard-page .add-task-inline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.project-dashboard-page .add-task-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: 1.5px solid #e5e7eb;
+    background: #ffffff;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-dashboard-page .add-task-input:hover {
+    border-color: #c7d2fe;
+}
+
+.project-dashboard-page .add-task-input:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.project-dashboard-page .add-icon {
+    font-size: 18px;
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+.project-dashboard-page .add-task-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    background: transparent;
+}
+
+.project-dashboard-page .add-task-input input::placeholder {
+    color: #9ca3af;
+}
+
+/* ADD BUTTON */
+.project-dashboard-page .add-task-btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-dashboard-page .add-task-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+}

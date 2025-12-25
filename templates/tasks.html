@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks | TaskFlow{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tasks.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="tasks-page">
+
+  <!-- ================= TOP BAR ================= -->
+  <div class="tasks-header">
+    <h1>YOUR TASKS</h1>
+
+    <div class="header-actions">
+      <div class="view-toggle">
+        <button class="active">List</button>
+        <button>Board</button>
+      </div>
+
+      <input type="text" placeholder="Quick-add task..." class="quick-add">
+      <button class="add-btn">+</button>
+    </div>
+  </div>
+
+  <!-- ================= CONTENT ================= -->
+  <div class="tasks-content">
+
+    <!-- LEFT: TASK LIST -->
+    <div class="task-list">
+      <h3>Inbox</h3>
+
+      <div class="task-item active">
+        <input type="checkbox">
+        <span class="task-title">Review Q3 Marketing Deck</span>
+        <span class="badge high">High</span>
+        <span class="badge low">Low</span>
+        <span class="date">Oct 26</span>
+      </div>
+
+      <div class="task-item">
+        <input type="checkbox">
+        <span class="task-title">Finalize Project Proposal</span>
+        <span class="badge medium">Medium</span>
+        <span class="badge inprogress">In Progress</span>
+        <span class="date">Oct 28</span>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: TASK DETAILS -->
+    <div class="task-details">
+      <h3>Task Details</h3>
+
+      <h4>Finalize Project Proposal</h4>
+      <p class="description">
+        Prepare and finalize the project proposal document for client review.
+      </p>
+
+      <div class="section">
+        <h5>Attachments</h5>
+        <p>proposal_draft.pdf</p>
+      </div>
+
+      <div class="section">
+        <h5>Comments</h5>
+        <input type="text" placeholder="Write a comment...">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tasks = document.querySelectorAll(".task-item");
+    const title = document.querySelector(".task-details h4");
+    const description = document.querySelector(".description");
+
+    tasks.forEach(task => {
+      task.addEventListener("click", () => {
+        tasks.forEach(t => t.classList.remove("active"));
+        task.classList.add("active");
+
+        title.textContent = task.querySelector(".task-title").textContent;
+        description.textContent =
+          "This is the detailed description for " +
+          task.querySelector(".task-title").textContent;
+      });
+    });
+  });
+</script>
+{% endblock %}

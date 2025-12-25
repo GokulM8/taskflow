@@ -1,49 +1,42 @@
 /* ================= PROJECTS PAGE ================= */
 
-/* ---------- HEADER + CREATE FORM ---------- */
 .projects-header {
-    margin-top: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .projects-header h1 {
     font-family: 'Poppins', sans-serif;
-    font-size: 32px;
+    font-size: 30px;
     margin-bottom: 6px;
 }
 
 .projects-header .subtitle {
-    color: #6b7280;
     font-size: 15px;
-    margin-bottom: 18px;
+    color: #6b7280;
 }
 
-/* Create Project Form */
+/* ================= CREATE PROJECT FORM ================= */
+
 .create-project-form {
+    margin-top: 20px;
     display: flex;
-    align-items: center;
     gap: 14px;
     flex-wrap: wrap;
 }
 
 .create-project-form input,
 .create-project-form textarea {
-    background: #ffffff;
+    padding: 14px 16px;
+    border-radius: 14px;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 12px 14px;
     font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    resize: none;
-}
-
-.create-project-form input {
-    width: 220px;
+    width: 260px;
 }
 
 .create-project-form textarea {
+    resize: none;
     width: 320px;
-    height: 44px;
+    height: 48px;
 }
 
 .create-project-form input:focus,
@@ -52,48 +45,49 @@
     border-color: #2563eb;
 }
 
-/* Button */
 .primary-btn {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: #ffffff;
-    border: none;
-    padding: 12px 22px;
+    padding: 14px 22px;
     border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    height: 44px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(37,99,235,0.25);
+    box-shadow: 0 10px 25px rgba(37,99,235,0.25);
 }
 
-/* ---------- PROJECTS GRID ---------- */
+/* ================= PROJECT GRID ================= */
+
 .projects-grid {
-    margin-top: 30px;
+    margin-top: 32px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
 }
 
-/* ---------- PROJECT CARD ---------- */
+/* ================= PROJECT CARD ================= */
+
 .project-card {
     background: #ffffff;
     padding: 22px;
-    border-radius: 22px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    border-radius: 24px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 28px 60px rgba(0,0,0,0.08);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
 }
 
-/* ---------- CARD HEADER ---------- */
+/* HEADER */
 .project-header {
     display: flex;
     justify-content: space-between;
@@ -101,144 +95,89 @@
     gap: 16px;
 }
 
-.project-text {
-    flex: 1;
-}
-
 .project-title {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
-    font-weight: 600;
-    color: #111827;
     margin-bottom: 6px;
 }
 
-/* Description */
 .project-desc {
     font-size: 14px;
     color: #6b7280;
-    line-height: 1.5;
-
-    /* Limit to 3 lines */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.4;
 }
 
-/* ---------- STATUS BADGE ---------- */
+/* STATUS BADGE */
 .project-status {
-    font-size: 12px;
-    padding: 4px 10px;
+    padding: 6px 14px;
     border-radius: 999px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     white-space: nowrap;
 }
 
 .project-status.todo {
-    background: #fff7ed;
-    color: #f97316;
+    background: #eef2ff;
+    color: #4338ca;
 }
 
 .project-status.in_progress {
-    background: #eff6ff;
-    color: #2563eb;
+    background: #fff7ed;
+    color: #c2410c;
 }
 
 .project-status.done {
     background: #ecfdf5;
-    color: #22c55e;
+    color: #047857;
 }
 
-/* ---------- META ---------- */
+/* META */
 .project-meta {
-    margin-top: 14px;
+    margin-top: 16px;
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    color: #9ca3af;
+    color: #6b7280;
 }
 
-/* ---------- ACTIONS ---------- */
+/* ACTIONS */
 .project-actions {
-    margin-top: 16px;
+    margin-top: 20px;
     display: flex;
-    gap: 14px;
+    justify-content: flex-end;
 }
 
 .link-btn {
-    font-size: 14px;
-    color: #2563eb;
     text-decoration: none;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background 0.2s ease;
 }
 
 .link-btn:hover {
-    text-decoration: underline;
+    background: #eef2ff;
 }
-/* ================= PROJECT DETAIL CARD ================= */
 
-.project-detail-wrapper {
+/* EMPTY STATE */
+.empty-text {
     margin-top: 40px;
-    display: flex;
-    justify-content: center;
-}
-
-.project-detail-card {
-    width: 100%;
-    max-width: 700px;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 26px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-}
-
-/* Header */
-.detail-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-}
-
-.detail-header h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 26px;
-}
-
-/* Description */
-.detail-desc {
-    margin-top: 12px;
     font-size: 15px;
     color: #6b7280;
-    line-height: 1.6;
 }
 
-/* Meta */
-.detail-meta {
-    margin-top: 18px;
-    font-size: 13px;
-    color: #9ca3af;
-}
+/* ================= RESPONSIVE ================= */
 
-/* Actions */
-.detail-actions {
-    margin-top: 26px;
-    display: flex;
-    gap: 14px;
-}
+@media (max-width: 768px) {
+    .create-project-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-/* Danger Button */
-.danger-btn {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 12px 20px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.danger-btn:hover {
-    background: #fecaca;
+    .create-project-form input,
+    .create-project-form textarea {
+        width: 100%;
+    }
 }

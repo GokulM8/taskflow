@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register | TaskFlow</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Register | TaskFlow{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
 
 <div class="login-bg">
     <div class="login-card">
@@ -26,11 +27,10 @@
 
         <p class="signup-text">
             Already have an account?
-            <a href="/login">Log In</a>
+            <a href="{{ url_for('login') }}">Log In</a>
         </p>
 
     </div>
 </div>
 
-</body>
-</html>
+{% endblock %}

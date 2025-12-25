@@ -1,0 +1,92 @@
+/* ================= AUTH PAGES ================= */
+
+.login-bg {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 520px;
+    padding: 50px;
+    background: #ffffff;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+}
+
+/* Brand */
+.login-card .brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/* Headings */
+.login-card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.login-card .subtitle {
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+/* Inputs */
+.login-card input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.login-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Options */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0 28px;
+    font-size: 14px;
+}
+
+.login-options a {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* Button */
+.login-card button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 999px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-card button:hover {
+    transform: translateY(-2px);
+}
+
+/* Footer text */
+.signup-text {
+    font-size: 14px;
+    color: #6b7280;
+}

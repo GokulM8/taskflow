@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap');
+
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================= GLOBAL ================= */
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #f7fbff, #e9f0f7);
+    color: #111827;
+}
+
+/* ================= WRAPPER ================= */
+.dashboard-wrapper {
+    padding: 30px 40px;
+}
+
+/* ================= TOP NAVBAR ================= */
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 72px;
+    padding: 0 32px;
+
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.06);
+
+    margin-bottom: 30px;
+}
+
+/* Brand */
+.brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* ================= NAV LINKS ================= */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+
+    padding: 8px 14px;
+    border-radius: 999px;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+.nav-links a.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* Disabled links */
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+/* ================= PROFILE ================= */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    background: #c7d2fe;
+    border-radius: 50%;
+}

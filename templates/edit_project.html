@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Project | TaskFlow{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit_project.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="edit-project-page">
+
+    <div class="edit-project-card">
+
+        <h1>Edit Project</h1>
+        <p class="subtitle">Update project details and status</p>
+
+        <form method="POST" class="edit-project-form">
+
+            <div>
+                <label>Project Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ project.title }}"
+                    required
+                >
+            </div>
+
+            <div>
+                <label>Description</label>
+                <textarea name="description">{{ project.description }}</textarea>
+            </div>
+
+            <div>
+                <label>Status</label>
+                <select name="status">
+                    <option value="todo" {% if project.status == 'todo' %}selected{% endif %}>
+                        To-Do
+                    </option>
+                    <option value="in_progress" {% if project.status == 'in_progress' %}selected{% endif %}>
+                        In Progress
+                    </option>
+                    <option value="done" {% if project.status == 'done' %}selected{% endif %}>
+                        Done
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="primary-btn">
+                    Save Changes
+                </button>
+
+                <a href="{{ url_for('project_dashboard', project_id=project.id) }}"
+                   class="secondary-link">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

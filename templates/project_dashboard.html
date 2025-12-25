@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} | TaskFlow{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="project-dashboard-page">
+
+  <!-- ================= PROJECT HEADER ================= -->
+  <div class="project-header-card">
+    <div class="project-header-left">
+      <h1>{{ project.title }}</h1>
+
+      <p class="project-desc">
+        {{ project.description or "No description provided for this project." }}
+      </p>
+
+      <div class="project-meta">
+        <span class="project-status {{ project.status }}">
+          {{ project.status.replace('_',' ').title() }}
+        </span>
+        <span class="created">
+          Created on {{ project.created_at.split(' ')[0] }}
+        </span>
+      </div>
+    </div>
+
+    <div class="project-header-right">
+      <a href="{{ url_for('edit_project', project_id=project.id) }}"
+         class="primary-btn">
+        Edit Project
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= PROJECT STATS ================= -->
+  <div class="project-stats-grid">
+    <div class="stat-card">
+      <span>Total Tasks</span>
+      <h2>{{ stats.total }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <span>Completed</span>
+      <h2>{{ stats.completed }}</h2>
+    </div>
+
+    <div class="stat-card highlight">
+      <span>In Progress</span>
+      <h2>{{ stats.in_progress }}</h2>
+    </div>
+  </div>
+
+  <!-- ================= PROJECT TASKS ================= -->
+  <div class="project-tasks-card">
+
+    <div class="tasks-header">
+      <h3>Project Tasks</h3>
+    </div>
+
+    <!-- ✅ SINGLE, CLEAN ADD TASK -->
+    <form class="add-task-inline"
+          method="POST"
+          action="{{ url_for('create_task', project_id=project.id) }}">
+
+      <div class="add-task-input">
+        <span class="add-icon">+</span>
+        <input
+          type="text"
+          name="title"
+          placeholder="Add a new task"
+          required
+        >
+      </div>
+
+      <button type="submit" class="add-task-btn">
+        Add
+      </button>
+    </form>
+
+    {% if tasks %}
+      <div class="project-task-list">
+        {% for task in tasks %}
+          <div class="task-row">
+            <span class="task-title">{{ task.title }}</span>
+            <span class="task-status {{ task.status }}">
+              {{ task.status.replace('_',' ').title() }}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-text">No tasks yet for this project.</p>
+    {% endif %}
+
+  </div>
+
+</section>
+
+{% endblock %}
