@@ -1,149 +1,178 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaskFlow Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-{% block title %}Dashboard | TaskFlow{% endblock %}
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-{% block content %}
-
-{% block page_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-{% endblock %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 
 
-<div class="dashboard-grid">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
 
-    <!-- ================= LEFT PANEL ================= -->
-    <aside class="left-panel">
-        <h3>User Overview</h3>
+</head>
+<body>
 
-        <div class="user-card">
-            <div class="avatar-lg"></div>
-            <h4>{{ name }}</h4>
-            <p>Project Manager</p>
+<div class="app">
+
+
+
+    <button id="menuToggle" class="menu-btn">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+      
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- LOGO -->
+    <div class="sidebar-header">
+      <div class="logo-icon">V</div>
+      <span class="logo-text">TaskFlow</span>
+    </div>
+  
+    <!-- NAVIGATION -->
+    <nav class="sidebar-nav">
+
+        
+        <a href="#" class="nav-item active">
+          <i class="fa-solid fa-grid-2"></i>
+          <span>Dashboard</span>
+        </a>
+      
+        <a href="#" class="nav-item">
+          <i class="fa-solid fa-folder"></i>
+          <span>Projects</span>
+        </a>
+      
+        <a href="#" class="nav-item">
+          <i class="fa-regular fa-clock"></i>
+          <span>Time Tracking</span>
+        </a>
+      
+        <a href="#" class="nav-item">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Documents</span>
+        </a>
+      
+      </nav>      
+  
+    <!-- LOGOUT -->
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="logout-btn">
+        Logout
+      </a>
+    </div>
+  
+  </aside>  
+  
+  <!-- MAIN -->
+  <main class="main">
+
+    <header class="topbar">
+      <h2>Hello, manage your tasks</h2>
+      <button class="btn-primary">+ New Task</button>
+    </header>
+
+    <section class="kanban">
+
+      <!-- TODO -->
+      <div class="column">
+        <h3>To Do</h3>
+
+        {% for task in projects if task.status == 'todo' %}
+        <div class="card">
+          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
+          <h4>{{ task.title }}</h4>
+          <p>{{ task.description }}</p>
+          <div class="meta">👥 {{ task.members }}</div>
         </div>
+        {% endfor %}
+      </div>
 
-        <div class="mini-stat">
-            <span>Active Projects</span>
-            <strong>{{ total_projects }}</strong>
+      <!-- IN PROGRESS -->
+      <div class="column">
+        <h3>In Progress</h3>
+
+        {% for task in projects if task.status == 'progress' %}
+        <div class="card">
+          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
+          <h4>{{ task.title }}</h4>
+          <p>{{ task.description }}</p>
+          <div class="meta">👥 {{ task.members }}</div>
         </div>
+        {% endfor %}
+      </div>
 
-        <div class="mini-stat">
-            <span>Tasks In Progress</span>
-            <strong>{{ in_progress }}</strong>
+      <!-- COMPLETED -->
+      <div class="column">
+        <h3>Completed</h3>
+
+        {% for task in projects if task.status == 'complete' %}
+        <div class="card">
+          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
+          <h4>{{ task.title }}</h4>
+          <p>{{ task.description }}</p>
+          <div class="meta">👥 {{ task.members }}</div>
         </div>
-    </aside>
+        {% endfor %}
+      </div>
 
-    <!-- ================= CENTER PANEL ================= -->
-    <main class="center-panel">
-        <h1>Welcome back, {{ name }}</h1>
-        <p class="subtitle">Here’s a snapshot of your project activity</p>
+    </section>
 
-        <div class="stats-row">
-            <div class="stat-card">
-                <span>Total Tasks</span>
-                <h2>{{ total_tasks }}</h2>
-            </div>
-
-            <div class="stat-card">
-                <span>Completed</span>
-                <h2>{{ completed }}</h2>
-            </div>
-
-            <div class="stat-card highlight">
-                <span>In Progress</span>
-                <h2>{{ in_progress }}</h2>
-            </div>
-        </div>
-
-        <div class="large-card">
-            <h3>Weekly Activity</h3>
-            <div class="chart-container" style="position: relative; height: 30vh;">
-                <canvas id="weeklyChart"></canvas>
-            </div>
-        </div>
-    </main>
-
-    <!-- ================= RIGHT PANEL ================= -->
-    <aside class="right-panel">
-        <div class="panel-header">
-            <h3>My Tasks</h3>
-            <span class="badge">{{ tasks|length }} Recent</span>
-        </div>
-
-        <div class="task-list">
-            {% for task in tasks %}
-            <div class="task-card">
-                <div class="task-info">
-                    <strong>{{ task.title }}</strong>
-
-                    <div class="status-group">
-                        <span class="status-dot {{ task.status }}"></span>
-                        <small class="status-text">
-                            {% if task.status == 'todo' %} To-Do
-                            {% elif task.status == 'in_progress' %} In Progress
-                            {% elif task.status == 'done' %} Done
-                            {% endif %}
-                        </small>
-                    </div>
-                </div>
-
-                <div class="task-date">
-                    {{ task.created_at.split(' ')[0] if task.created_at else 'N/A' }}
-                </div>
-            </div>
-            {% else %}
-            <div class="empty-state">
-                <p>No tasks yet. Start by creating a project!</p>
-            </div>
-            {% endfor %}
-        </div>
-    </aside>
-
+  </main>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="modal" id="taskModal">
+    <div class="modal-content">
+      <h3 id="modalTitle">New Task</h3>
+  
+      <input type="text" id="taskTitle" placeholder="Task title" />
+      <textarea id="taskDesc" placeholder="Task description"></textarea>
+  
+      <select id="taskStatus">
+        <option value="todo">To Do</option>
+        <option value="progress">In Progress</option>
+        <option value="complete">Completed</option>
+      </select>
+  
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveTask()">Save</button>
+      </div>
+    </div>
+  </div>
+  
 
 <script>
-    const weeklyData = JSON.parse('{{ weekly_data | tojson | safe }}');
-
-    const ctx = document.getElementById('weeklyChart').getContext('2d');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            datasets: [{
-                label: 'Tasks Completed',
-                data: weeklyData,
-                borderColor: '#2563eb',
-                backgroundColor: 'rgba(37, 99, 235, 0.15)',
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#2563eb'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1, color: '#64748b' },
-                    grid: { color: '#f1f5f9' }
-                },
-                x: {
-                    ticks: { color: '#64748b' },
-                    grid: { display: false }
-                }
-            }
-        }
-    });
+    lucide.createIcons();
 </script>
-{% endblock %}
+
+<div class="overlay" id="overlay"></div>
+
+<script>
+    const menuBtn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+  
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("show");
+    });
+  
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("show");
+    });
+  </script>
+  
+
+</body>
+</html>
