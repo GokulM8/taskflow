@@ -1,15 +1,7 @@
-import sqlite3
-
-def get_db():
-    conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row
-    return conn
-
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
 
-    # USERS TABLE
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +12,6 @@ def init_db():
     )
     """)
 
-    # PROJECTS TABLE
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,14 +23,13 @@ def init_db():
     )
     """)
 
-    # TASKS TABLE (STEP 1 FINAL)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         project_id INTEGER NOT NULL,
         title TEXT NOT NULL,
         description TEXT,
-        status TEXT CHECK(status IN ('todo', 'in_progress', 'completed')) DEFAULT 'todo',
+        status TEXT CHECK(status IN ('todo', 'progress', 'complete')) DEFAULT 'todo',
         priority TEXT CHECK(priority IN ('low', 'medium', 'high')) DEFAULT 'medium',
         due_date TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -49,7 +39,3 @@ def init_db():
 
     conn.commit()
     conn.close()
-
-if __name__ == "__main__":
-    init_db()
-    print("Database initialized successfully.")

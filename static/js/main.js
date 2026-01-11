@@ -1,41 +1,46 @@
+// =======================
+// MENU TOGGLE
+// =======================
 document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-  
-    if (!menuToggle || !navLinks) return;
-  
-    // Toggle menu open/close
+  const menuToggle = document.getElementById("menuToggle");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  if (menuToggle && sidebar && overlay) {
     menuToggle.addEventListener("click", () => {
-      menuToggle.classList.toggle("active");
-      navLinks.classList.toggle("active");
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("show");
     });
-  
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (
-        !menuToggle.contains(e.target) &&
-        !navLinks.contains(e.target)
-      ) {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
-      }
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("show");
     });
-  
-    // Close menu when clicking a nav link
-    document.querySelectorAll(".nav-links a").forEach(link => {
-      link.addEventListener("click", () => {
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
-      });
-    });
-  });
+  }
+});
 
+// =======================
+// TASK MODAL LOGIC
+// =======================
 
-  <script>
-let editingTask = null;
+let editingCard = null;
 
-function openModal() {
-  document.getElementById("taskModal").classList.add("show");
+function openModal(card = null) {
+  const modal = document.getElementById("taskModal");
+  modal.classList.add("show");
+
+  if (card) {
+    editingCard = card;
+    document.getElementById("taskTitle").value =
+      card.querySelector("h4").innerText;
+    document.getElementById("taskDesc").value =
+      card.querySelector("p").innerText;
+    document.getElementById("taskStatus").value =
+      card.querySelector(".tag").innerText.toLowerCase();
+  } else {
+    editingCard = null;
+    clearForm();
+  }
 }
 
 function closeModal() {
@@ -43,41 +48,80 @@ function closeModal() {
   clearForm();
 }
 
-document.getElementById("openTaskModal").onclick = openModal;
+function clearForm() {
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDesc").value = "";
+  document.getElementById("taskStatus").value = "todo";
+}
 
+// =======================
+// SAVE TASK
+// =======================
 function saveTask() {
+  if (!activeCard) return;
+
   const title = document.getElementById("taskTitle").value;
   const desc = document.getElementById("taskDesc").value;
   const status = document.getElementById("taskStatus").value;
 
-  if (!title) return alert("Enter task title");
+  fetch("/update-task", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: activeCard.dataset.id,
+      title: title,
+      description: desc,
+      status: status
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      // Update UI
+      activeCard.querySelector("h4").innerText = title;
+      activeCard.querySelector("p").innerText = desc;
+      activeCard.querySelector(".tag").innerText = status;
+      activeCard.dataset.status = status;
 
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <span class="tag ${status}">${status}</span>
-    <h4>${title}</h4>
-    <p>${desc}</p>
-    <div class="actions">
-      <button onclick="editTask(this)">Edit</button>
-      <button onclick="deleteTask(this)">Delete</button>
-    </div>
-  `;
+      const col = document.querySelector(`.column[data-status="${status}"]`);
+      col.appendChild(activeCard);
 
-  document.querySelector(`.column:has(h3:contains("${status === 'todo' ? 'To Do' : status === 'progress' ? 'In Progress' : 'Completed'}"))`)
-    ?.appendChild(card);
+      closeModal();
+    } else {
+      alert("Update failed");
+    }
+  });
+}
 
-  closeModal();
+const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("show");
+  overlay.classList.toggle("show");
+  menuToggle.classList.toggle("sidebar-open");
+});
+
+overlay.addEventListener("click", () => {
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+  menuToggle.classList.remove("sidebar-open");
+});
+
+
+// =======================
+// EDIT + DELETE
+// =======================
+function editTask(btn) {
+  const card = btn.closest(".card");
+  openModal(card);
 }
 
 function deleteTask(btn) {
-  btn.closest('.card').remove();
+  if (confirm("Delete this task?")) {
+    btn.closest(".card").remove();
+  }
 }
-
-function editTask(btn) {
-  const card = btn.closest('.card');
-  document.getElementById("taskTitle").value = card.querySelector("h4").innerText;
-  document.getElementById("taskDesc").value = card.querySelector("p").innerText;
-  openModal();
-}
-</script>

@@ -1,7 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "super_secret_key_123"  # Change in production
+app.secret_key = "super_secret_key_123"
+
+
+# ---------------- DATABASE ----------------
+def get_db():
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
 # ---------------- LOGIN ----------------
@@ -11,12 +19,11 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        # Temporary credentials (replace with DB later)
-        if email == "admin@vektora.com" and password == "admin123":
+        if email == "admin@taskflow.com" and password == "admin123":
             session["user"] = email
             return redirect(url_for("dashboard"))
-        else:
-            flash("Invalid email or password", "error")
+
+        flash("Invalid credentials", "error")
 
     return render_template("auth.html")
 
@@ -24,7 +31,7 @@ def login():
 # ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
-    session.pop("user", None)
+    session.clear()
     return redirect(url_for("login"))
 
 
@@ -34,40 +41,41 @@ def dashboard():
     if "user" not in session:
         return redirect(url_for("login"))
 
-    projects = [
-        {
-            "title": "Prototipi Mobile App",
-            "status": "todo",
-            "priority": "Medium",
-            "description": "Evaluate and improve performance",
-            "members": 2
-        },
-        {
-            "title": "YellyBox Project",
-            "status": "progress",
-            "priority": "Low",
-            "description": "Collaboration platform",
-            "members": 3
-        },
-        {
-            "title": "Minicam Exploration",
-            "status": "progress",
-            "priority": "High",
-            "description": "Explore camera optimization",
-            "members": 2
-        },
-        {
-            "title": "Mantraman Branding",
-            "status": "complete",
-            "priority": "High",
-            "description": "Brand identity system",
-            "members": 4
-        }
-    ]
+    conn = get_db()
+    tasks = conn.execute("SELECT * FROM tasks").fetchall()
+    conn.close()
 
-    return render_template("dashboard.html", projects=projects)
+    return render_template("dashboard.html", tasks=tasks)
 
 
-# ---------------- RUN SERVER ----------------
+# ---------------- UPDATE TASK ----------------
+@app.route("/update-task", methods=["POST"])
+def update_task():
+    if "user" not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE tasks
+        SET title = ?, description = ?, status = ?
+        WHERE id = ?
+    """, (
+        data["title"],
+        data["description"],
+        data["status"],
+        data["id"]
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"success": True})
+
+
+# ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)

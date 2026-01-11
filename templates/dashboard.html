@@ -3,176 +3,335 @@
 <head>
   <meta charset="UTF-8" />
   <title>TaskFlow Dashboard</title>
+
+  <!-- External CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-  <script src="https://unpkg.com/lucide@latest"></script>
-
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-
-
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
 <div class="app">
 
-
-
-    <button id="menuToggle" class="menu-btn">
-        <i class="fa-solid fa-bars"></i>
-    </button>
-      
+  <button id="menuToggle" class="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  
 
   <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-
-    <!-- LOGO -->
-    <div class="sidebar-header">
-      <div class="logo-icon">V</div>
-      <span class="logo-text">TaskFlow</span>
+  <aside class="sidebar">
+    <!-- Logo Section -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-rocket"></i>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">TaskFlow</span>
+        <span class="brand-tag">Pro</span>
+      </div>
     </div>
-  
-    <!-- NAVIGATION -->
-    <nav class="sidebar-nav">
 
-        
-        <a href="#" class="nav-item active">
-          <i class="fa-solid fa-grid-2"></i>
-          <span>Dashboard</span>
+    <!-- Quick Stats -->
+    <div class="sidebar-stats">
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Active Tasks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Projects</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main</div>
+        <a class="nav-item active" href="#" data-tooltip="Dashboard">
+          <div class="nav-icon">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <span class="nav-text">Dashboard</span>
         </a>
-      
-        <a href="#" class="nav-item">
-          <i class="fa-solid fa-folder"></i>
-          <span>Projects</span>
+
+        <a class="nav-item" href="#" data-tooltip="Projects">
+          <div class="nav-icon">
+            <i class="fa-solid fa-diagram-project"></i>
+          </div>
+          <span class="nav-text">Projects</span>
         </a>
-      
-        <a href="#" class="nav-item">
-          <i class="fa-regular fa-clock"></i>
-          <span>Time Tracking</span>
+
+        <a class="nav-item" href="#" data-tooltip="Tasks">
+          <div class="nav-icon">
+            <i class="fa-solid fa-check-square"></i>
+          </div>
+          <span class="nav-text">Tasks</span>
         </a>
-      
-        <a href="#" class="nav-item">
-          <i class="fa-regular fa-file-lines"></i>
-          <span>Documents</span>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Tools</div>
+        <a class="nav-item" href="#" data-tooltip="Time Tracking">
+          <div class="nav-icon">
+            <i class="fa-solid fa-stopwatch"></i>
+          </div>
+          <span class="nav-text">Time Tracking</span>
         </a>
-      
-      </nav>      
-  
-    <!-- LOGOUT -->
+
+        <a class="nav-item" href="#" data-tooltip="Analytics">
+          <div class="nav-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <span class="nav-text">Analytics</span>
+        </a>
+
+        <a class="nav-item" href="#" data-tooltip="Documents">
+          <div class="nav-icon">
+            <i class="fa-solid fa-file-contract"></i>
+          </div>
+          <span class="nav-text">Documents</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- User Section -->
+    <div class="sidebar-user">
+      <div class="user-card">
+        <div class="user-avatar">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div class="user-details">
+          <div class="user-name">John Doe</div>
+          <div class="user-plan">Premium Plan</div>
+        </div>
+        <button class="user-menu-btn">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Logout -->
     <div class="sidebar-footer">
       <a href="{{ url_for('logout') }}" class="logout-btn">
-        Logout
+        <i class="fa-solid fa-sign-out-alt"></i>
+        <span>Sign Out</span>
       </a>
     </div>
+  </aside>
   
-  </aside>  
-  
+
   <!-- MAIN -->
   <main class="main">
 
     <header class="topbar">
       <h2>Hello, manage your tasks</h2>
-      <button class="btn-primary">+ New Task</button>
+      <button class="btn-primary">
+        <i class="fa-solid fa-plus"></i>
+        New Task
+      </button>
     </header>
 
     <section class="kanban">
 
       <!-- TODO -->
-      <div class="column">
+      <div class="column" data-status="todo">
         <h3>To Do</h3>
-
-        {% for task in projects if task.status == 'todo' %}
-        <div class="card">
-          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
-          <h4>{{ task.title }}</h4>
-          <p>{{ task.description }}</p>
-          <div class="meta">👥 {{ task.members }}</div>
-        </div>
+      
+        {% for task in tasks if task.status == 'todo' %}
+          <div class="card" data-id="{{ task.id }}" data-status="{{ task.status }}" onclick="openTaskModal(this)">
+            <span class="tag {{ task.status }}">📋 To Do</span>
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
         {% endfor %}
       </div>
+      
 
       <!-- IN PROGRESS -->
-      <div class="column">
+      <div class="column" data-status="progress">
         <h3>In Progress</h3>
-
-        {% for task in projects if task.status == 'progress' %}
-        <div class="card">
-          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
-          <h4>{{ task.title }}</h4>
-          <p>{{ task.description }}</p>
-          <div class="meta">👥 {{ task.members }}</div>
-        </div>
+      
+        {% for task in tasks if task.status == 'progress' %}
+          <div class="card" data-id="{{ task.id }}" data-status="{{ task.status }}" onclick="openTaskModal(this)">
+            <span class="tag {{ task.status }}">🚧 In Progress</span>
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
         {% endfor %}
       </div>
+      
 
       <!-- COMPLETED -->
-      <div class="column">
+      <div class="column" data-status="complete">
         <h3>Completed</h3>
-
-        {% for task in projects if task.status == 'complete' %}
-        <div class="card">
-          <span class="tag {{ task.priority|lower }}">{{ task.priority }}</span>
-          <h4>{{ task.title }}</h4>
-          <p>{{ task.description }}</p>
-          <div class="meta">👥 {{ task.members }}</div>
-        </div>
+      
+        {% for task in tasks if task.status == 'complete' %}
+          <div class="card" data-id="{{ task.id }}" data-status="{{ task.status }}" onclick="openTaskModal(this)">
+            <span class="tag {{ task.status }}">✅ Completed</span>
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
         {% endfor %}
       </div>
+      
 
     </section>
-
   </main>
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="taskModal">
-    <div class="modal-content">
-      <h3 id="modalTitle">New Task</h3>
-  
-      <input type="text" id="taskTitle" placeholder="Task title" />
-      <textarea id="taskDesc" placeholder="Task description"></textarea>
-  
-      <select id="taskStatus">
-        <option value="todo">To Do</option>
-        <option value="progress">In Progress</option>
-        <option value="complete">Completed</option>
-      </select>
-  
-      <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-        <button class="btn-primary" onclick="saveTask()">Save</button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="fa-solid fa-edit"></i>
+        <h3>Edit Task</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="taskTitle">
+          <i class="fa-solid fa-heading"></i>
+          Task Title
+        </label>
+        <input type="text" id="taskTitle" placeholder="Enter task title..." required>
+      </div>
+
+      <div class="form-group">
+        <label for="taskDesc">
+          <i class="fa-solid fa-align-left"></i>
+          Description
+        </label>
+        <textarea id="taskDesc" placeholder="Enter task description..." rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="taskStatus">
+          <i class="fa-solid fa-flag"></i>
+          Status
+        </label>
+        <select id="taskStatus">
+          <option value="todo">📋 To Do</option>
+          <option value="progress">🚧 In Progress</option>
+          <option value="complete">✅ Completed</option>
+        </select>
       </div>
     </div>
-  </div>
-  
 
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">
+        <i class="fa-solid fa-times"></i>
+        Cancel
+      </button>
+      <button class="btn-primary" onclick="saveTask()">
+        <i class="fa-solid fa-save"></i>
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPT -->
 <script>
-    lucide.createIcons();
+let activeCard = null;
+
+// Open modal
+function openTaskModal(card) {
+  activeCard = card;
+
+  document.getElementById("taskTitle").value =
+    card.querySelector("h4").innerText;
+
+  document.getElementById("taskDesc").value =
+    card.querySelector("p").innerText;
+
+  document.getElementById("taskStatus").value =
+    card.dataset.status;
+
+  document.getElementById("taskModal").classList.add("show");
+
+  // Focus on title input
+  setTimeout(() => {
+    document.getElementById("taskTitle").focus();
+  }, 100);
+}
+
+// Close modal
+function closeModal() {
+  document.getElementById("taskModal").classList.remove("show");
+  activeCard = null;
+
+  // Clear form validation
+  document.getElementById("taskTitle").classList.remove("error");
+  document.querySelector('.error-message')?.remove();
+}
+
+// Save changes
+function saveTask() {
+  if (!activeCard) return;
+
+  const titleInput = document.getElementById("taskTitle");
+  const title = titleInput.value.trim();
+  const desc = document.getElementById("taskDesc").value.trim();
+  const status = document.getElementById("taskStatus").value;
+
+  // Clear previous errors
+  titleInput.classList.remove("error");
+  document.querySelector('.error-message')?.remove();
+
+  if (!title) {
+    titleInput.classList.add("error");
+    titleInput.insertAdjacentHTML('afterend', '<div class="error-message">Task title is required</div>');
+    titleInput.focus();
+    return;
+  }
+
+  activeCard.querySelector("h4").innerText = title;
+  activeCard.querySelector("p").innerText = desc;
+  activeCard.querySelector(".tag").innerText = status.replace('todo', '📋 To Do').replace('progress', '🚧 In Progress').replace('complete', '✅ Completed');
+  activeCard.querySelector(".tag").className = `tag ${status}`;
+  activeCard.dataset.status = status;
+
+  const targetColumn = document.querySelector(`.column[data-status="${status}"]`);
+  targetColumn.appendChild(activeCard);
+
+  closeModal();
+}
+
+// ESC key handler
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById("taskModal").classList.contains("show")) {
+    closeModal();
+  }
+});
+
+// Click outside to close
+document.getElementById("taskModal").addEventListener('click', (e) => {
+  if (e.target === document.getElementById("taskModal")) {
+    closeModal();
+  }
+});
 </script>
 
-<div class="overlay" id="overlay"></div>
 
 <script>
-    const menuBtn = document.getElementById("menuToggle");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-  
-    menuBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
-      overlay.classList.toggle("show");
-    });
-  
-    overlay.addEventListener("click", () => {
-      sidebar.classList.remove("active");
-      overlay.classList.remove("show");
-    });
-  </script>
-  
+  const menuToggle = document.getElementById("menuToggle");
+  const sidebar = document.querySelector(".sidebar");
+
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("show");
+  });
+</script>
+
 
 </body>
 </html>
